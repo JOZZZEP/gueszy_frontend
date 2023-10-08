@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:gueszy/screens/menu/all_game_screen.dart';
+import 'package:gueszy/widgets/circle_button_float.dart';
 import 'package:gueszy/widgets/text_custom.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -9,19 +12,19 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
-  final list = List.generate(20, (index) => {"index": index});
-  late List<AnimationController> _controllers;
+  late final TabController _tabController;
+
+  final List<Tab> tabList = [
+    const Tab(text: "ทั้งหมด"),
+    const Tab(text: "ยอดนิยม"),
+    const Tab(text: "เกมใหม่"),
+    const Tab(text: "เกมของฉัน"),
+  ];
 
   @override
   void initState() {
     super.initState();
-    _controllers = List.generate(
-      list.length,
-      (index) => AnimationController(
-        duration: const Duration(milliseconds: 80),
-        vsync: this,
-      ),
-    );
+    _tabController = TabController(length: tabList.length, vsync: this);
   }
 
   @override
@@ -30,101 +33,52 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
       body: SafeArea(
         child: Stack(
           children: [
-            GridView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 70),
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
-                  childAspectRatio: 0.8,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20),
-              itemCount: list.length,
-              itemBuilder: (_, index) {
-                return GestureDetector(
-                  child: ScaleTransition(
-                    scale: Tween<double>(
-                      begin: 1.0,
-                      end: 0.9,
-                    ).animate(_controllers[index]),
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: Image.network(
-                                "https://yt3.googleusercontent.com/ytc/AOPolaQhiUFeIqKQem41nDtv6WGfGSFRoO9hc78Z-s2G=s900-c-k-c0x00ffffff-no-rj",
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          TextCustom(
-                            list[index]["index"].toString(),
-                            size: 25,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    _controllers[index].forward();
-                    Future.delayed(const Duration(milliseconds: 80), () {
-                      _controllers[index].reverse();
-                    });
-                    print('Shrink');
-                  },
-                );
-              },
-            ),
-            Positioned(
-              top: 10,
-              right: 20,
-              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                FloatingActionButton.small(
-                  backgroundColor: Colors.pink,
-                  onPressed: () => {},
-                  shape: const CircleBorder(),
-                  child: const Icon(
-                    Icons.person,
-                    color: Colors.white,
+            NestedScrollView(
+              floatHeaderSlivers: true,
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) => [
+                const SliverAppBar(
+                  floating: true,
+                  title: TextCustom(
+                    "GUESZY",
+                    size: 30,
+                    isBold: true,
                   ),
                 ),
-              ]),
-            ),
-            Positioned(
-              bottom: 10,
-              right: 20,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+              ],
+              body: Column(
                 children: [
-                  FloatingActionButton.small(
-                    backgroundColor: Colors.pink,
-                    onPressed: () => {},
-                    shape: const CircleBorder(),
-                    child: const Icon(
-                      Icons.edit,
+                  TabBar(
+                    controller: _tabController,
+                    indicatorWeight: 3,
+                    dividerColor: Colors.transparent,
+                    labelStyle: GoogleFonts.kanit(
+                      fontSize: 20,
                       color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
+                    isScrollable: true,
+                    tabs: tabList,
                   ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  FloatingActionButton.small(
-                    backgroundColor: Colors.pink,
-                    onPressed: () => {},
-                    shape: const CircleBorder(),
-                    child: const Icon(
-                      Icons.settings,
-                      color: Colors.white,
+                  const Divider(height: 1),
+                  Expanded(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: const [
+                        AllGameScreen(),
+                        AllGameScreen(),
+                        AllGameScreen(),
+                        AllGameScreen(),
+                      ],
                     ),
                   ),
                 ],
               ),
+            ),
+            const Positioned(
+              bottom: 15,
+              right: 20,
+              child: CircleButtonFloat(Icons.edit),
             ),
           ],
         ),
