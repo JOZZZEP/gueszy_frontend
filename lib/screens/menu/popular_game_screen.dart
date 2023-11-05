@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:gueszy/screens/game/game_screen.dart';
 import 'package:gueszy/widgets/text_custom.dart';
 
-class AllGameScreen extends StatefulWidget {
-  const AllGameScreen({super.key});
+class PopularGameScreen extends StatefulWidget {
+  const PopularGameScreen({super.key});
 
   @override
-  State<AllGameScreen> createState() => _AllGameScreenState();
+  State<PopularGameScreen> createState() => _PopularGameScreenState();
 }
 
-class _AllGameScreenState extends State<AllGameScreen>
+class _PopularGameScreenState extends State<PopularGameScreen>
     with TickerProviderStateMixin {
   late List list;
   late List<AnimationController> _controllers;
@@ -33,8 +31,8 @@ class _AllGameScreenState extends State<AllGameScreen>
     return GridView.builder(
       padding: const EdgeInsets.all(20),
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200,
-          childAspectRatio: 0.8,
+          maxCrossAxisExtent: 400,
+          childAspectRatio: 2.5,
           crossAxisSpacing: 20,
           mainAxisSpacing: 20),
       itemCount: list.length,
@@ -51,7 +49,7 @@ class _AllGameScreenState extends State<AllGameScreen>
                 color: Colors.amber,
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Column(
+              child: Row(
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(10),
@@ -77,37 +75,6 @@ class _AllGameScreenState extends State<AllGameScreen>
               _controllers[index].reverse();
             });
             print('Shrink');
-            showDialog(
-              context: context,
-              builder: (BuildContext context) => AlertDialog(
-                title: const TextCustom(
-                  'เริ่มเกม',
-                  size: 30,
-                ),
-                content: const TextCustom(
-                  'มีเวลา 60 วินาที',
-                  size: 20,
-                ),
-                actions: <Widget>[
-                  Center(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                      ),
-                      onPressed: () {
-                        Get.back();
-                        Get.to(() => (const GameScreen()));
-                      },
-                      child: const TextCustom(
-                        'เริ่มเกม',
-                        size: 20,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
           },
         );
       },
