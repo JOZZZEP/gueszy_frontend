@@ -46,9 +46,25 @@ class UserServices {
       return -1;
     }
   }
+
+  static Future<int> updateUser(int id,Map<String, String> user) async {
+    String url = "${Endpoint.endpoint}/gueszy/user/update/$id";
+    try {
+      final response = await http.put(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(user),
+      );
+      return response.statusCode;
+    } catch (e) {
+      return -1;
+    }
+  }
 }
 
 void main(List<String> args) {
-  UserServices.registerUser({"name": "testUser3", "password": "1234"})
+  UserServices.updateUser(2,{"name": "tock3", "password": "1234"})
       .then((value) => print(value));
 }
