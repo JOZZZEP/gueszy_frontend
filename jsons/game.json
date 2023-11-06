@@ -1,0 +1,10 @@
+{
+    "id": 1,
+    "name": "สัตว์",
+    "image": "https://img.a4h6.c18.e2-4.dev/animals.jpeg",
+    "categoryId": "$category",
+    "userId": "$user",
+    "play": 0,
+    "access": 0,
+    "createAt": "2023-11-05T17:37:33"
+}

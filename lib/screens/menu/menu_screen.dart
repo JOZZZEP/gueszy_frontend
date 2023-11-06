@@ -18,8 +18,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
   final List<Tab> tabList = [
     const Tab(text: "ทั้งหมด"),
-    const Tab(text: "ยอดนิยม"),
-    const Tab(text: "เกมใหม่"),
+    // const Tab(text: "ยอดนิยม"),
+    // const Tab(text: "เกมใหม่"),
     const Tab(text: "เกมของฉัน"),
   ];
 
@@ -50,7 +50,40 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                     Icons.person,
                     color: Colors.green[900],
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Center(
+                          child: TextCustom(
+                            "User",
+                            size: 30,
+                          ),
+                        ),
+                        content: const TextCustom(
+                          "user detail",
+                          size: 20,
+                        ),
+                        actions: <Widget>[
+                          Center(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                              ),
+                              onPressed: () {
+                                Get.back();
+                              },
+                              child: const TextCustom(
+                                'ปิด',
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
                 IconButton(
                   icon: Icon(
@@ -88,8 +121,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                   children: const [
                     AllGameScreen(),
                     PopularGameScreen(),
-                    AllGameScreen(),
-                    AllGameScreen(),
+                    // AllGameScreen(),
+                    // AllGameScreen(),
                   ],
                 ),
               ),

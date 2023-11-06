@@ -2,10 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:gueszy/api/vocab_service.dart';
+import 'package:gueszy/models/index.dart';
+import 'package:gueszy/screens/game/score_screen.dart';
 import 'package:gueszy/widgets/text_custom.dart';
 
 class GameScreen extends StatefulWidget {
-  const GameScreen({super.key});
+  final Game game;
+  const GameScreen({Key? key, required this.game}) : super(key: key);
 
   @override
   State<GameScreen> createState() => _GameScreenState();
@@ -19,6 +24,9 @@ class _GameScreenState extends State<GameScreen> {
   String text = "หันไปทางเพื่อน";
   Color? backgroundColor = Colors.white;
   int wordCount = 1;
+  int score = 0;
+
+  Vocabularys? vocabs;
 
   void startTimer() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -27,6 +35,7 @@ class _GameScreenState extends State<GameScreen> {
           timeLeft--;
         } else {
           timer.cancel();
+          Get.off(() => const ScoreScreen());
         }
       });
     });
@@ -41,7 +50,8 @@ class _GameScreenState extends State<GameScreen> {
           timer.cancel();
           timeLeft = 60;
           start = true;
-          text = "คำ $wordCount";
+          text = vocabs!.vocabularys[wordCount].word;
+          // text = "คำ $wordCount";
           startTimer();
         }
       });
@@ -51,6 +61,13 @@ class _GameScreenState extends State<GameScreen> {
   @override
   void initState() {
     super.initState();
+    VocabServices.getVocab(widget.game.id.toInt()).then((value) {
+      setState(() {
+        vocabs = value;
+        vocabs!.vocabularys.shuffle();
+      });
+    });
+
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
@@ -114,7 +131,9 @@ class _GameScreenState extends State<GameScreen> {
                                             timer.cancel();
                                             backgroundColor = Colors.white;
                                             wordCount++;
-                                            text = "คำ $wordCount";
+                                            text = vocabs!
+                                                .vocabularys[wordCount].word;
+                                            // text = "คำ $wordCount";
                                             tap = true;
                                           }
                                         });
@@ -147,7 +166,9 @@ class _GameScreenState extends State<GameScreen> {
                                             timer.cancel();
                                             backgroundColor = Colors.white;
                                             wordCount++;
-                                            text = "คำ $wordCount";
+                                            text = vocabs!
+                                                .vocabularys[wordCount].word;
+                                            // text = "คำ $wordCount";
                                             tap = true;
                                           }
                                         });
@@ -184,6 +205,17 @@ class _GameScreenState extends State<GameScreen> {
                       ],
                     ),
             ),
+            Positioned(
+              top: 0,
+              right: 0,
+              child: InkWell(
+                onTap: () {
+                  Get.off(() => const ScoreScreen());
+                },
+                child: const SizedBox(
+                    width: 50, height: 50, child: Icon(Icons.exit_to_app)),
+              ),
+            )
           ],
         ),
       ),

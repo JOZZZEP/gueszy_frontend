@@ -23,6 +23,7 @@ class TextCustom extends StatelessWidget {
         color: color ?? Colors.black,
         fontWeight: isBold ? FontWeight.w600 : FontWeight.normal,
       ),
+      softWrap: true,
     );
   }
 }

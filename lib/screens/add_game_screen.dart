@@ -58,25 +58,30 @@ class _AddGameScreenState extends State<AddGameScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Row(
+                // Row(
+                //   children: [
+                //     SizedBox(
+                //       height: 50,
+                //       child: ElevatedButton(
+                //         onPressed: () {},
+                //         style: ElevatedButton.styleFrom(
+                //           padding: const EdgeInsets.symmetric(horizontal: 0),
+                //           shape: RoundedRectangleBorder(
+                //             borderRadius: BorderRadius.circular(15),
+                //           ),
+                //         ),
+                //         child: const Icon(Icons.image),
+                //       ),
+                //     ),
+                //     const SizedBox(
+                //       width: 10,
+                //     ),
+                //     const Expanded(child: RoundTextField("ชื่อเกม")),
+                //   ],
+                // ),
+                const Row(
                   children: [
-                    SizedBox(
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
-                        child: const Icon(Icons.image),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    const Expanded(child: RoundTextField("ชื่อเกม")),
+                    Expanded(child: RoundTextField("ชื่อเกม")),
                   ],
                 ),
                 const SizedBox(
@@ -84,7 +89,7 @@ class _AddGameScreenState extends State<AddGameScreen> {
                 ),
                 const Row(
                   children: [
-                    Expanded(child: RoundTextField("คำอธิบาย")),
+                    Expanded(child: RoundTextField("URL รูปภาพ")),
                   ],
                 ),
                 const SizedBox(
