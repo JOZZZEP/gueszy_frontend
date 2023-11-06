@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gueszy/api/game_service.dart';
@@ -80,24 +82,24 @@ class _AllGameScreenState extends State<AllGameScreen> {
                             child: Stack(
                               children: [
                                 Image.network(games.games[index].image),
-                                const Positioned(
+                                Positioned(
                                   top: 5,
                                   left: 5,
                                   child: Stack(
                                     alignment: Alignment.center,
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.star,
                                         size: 50,
                                         color: Colors.white,
                                       ),
-                                      Icon(
+                                      const Icon(
                                         Icons.star,
                                         size: 40,
                                         color: Colors.amber,
                                       ),
                                       TextCustom(
-                                        "1",
+                                        (Random().nextInt(5) + 1).toString(),
                                         size: 15,
                                       )
                                     ],
@@ -149,7 +151,7 @@ class _AllGameScreenState extends State<AllGameScreen> {
                                   ),
                                   onPressed: () {
                                     Get.back();
-                                    Get.to(() => (GameScreen(
+                                    Get.off(() => (GameScreen(
                                           game: games.games[index],
                                         )));
                                   },

@@ -59,29 +59,6 @@ class _MyGameScreenState extends State<MyGameScreen> {
                             child: Stack(
                               children: [
                                 Image.network(games.games[index].image),
-                                const Positioned(
-                                  top: 5,
-                                  left: 5,
-                                  child: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.star,
-                                        size: 50,
-                                        color: Colors.white,
-                                      ),
-                                      Icon(
-                                        Icons.star,
-                                        size: 40,
-                                        color: Colors.amber,
-                                      ),
-                                      TextCustom(
-                                        "1",
-                                        size: 15,
-                                      )
-                                    ],
-                                  ),
-                                ),
                               ],
                             ),
                           ),
@@ -122,7 +99,96 @@ class _MyGameScreenState extends State<MyGameScreen> {
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.red,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                          title: Center(
+                                            child: TextCustom(
+                                              games.games[index].name,
+                                              size: 30,
+                                            ),
+                                          ),
+                                          content: TextCustom(
+                                            "ใบ้คำเกี่ยวกับ${games.games[index].name}",
+                                            size: 20,
+                                          ),
+                                          actions: <Widget>[
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor: Colors.red,
+                                                  ),
+                                                  onPressed: () {
+                                                    Get.back();
+                                                    Get.back();
+                                                    setState(() {
+                                                      isLoading = true;
+                                                    });
+                                                    GameServices.deleteGame(
+                                                            games
+                                                                .games[index].id
+                                                                .toInt())
+                                                        .then((value) => {
+                                                              setState(() {
+                                                                GameServices.getGamesById(
+                                                                        userControl
+                                                                            .id
+                                                                            .toInt())
+                                                                    .then(
+                                                                        (value) =>
+                                                                            {
+                                                                              setState(() {
+                                                                                games = value;
+                                                                                print(games.games[1].name);
+                                                                                isLoading = false;
+                                                                              })
+                                                                            });
+                                                              })
+                                                            });
+                                                    // Navigator.of(context).push(
+                                                    //     MaterialPageRoute(
+                                                    //         builder: (context) =>
+                                                    //             const MyGameScreen()));
+                                                    // Get.off(() =>
+                                                    //     const MenuScreen());
+                                                  },
+                                                  child: const Icon(
+                                                    Icons.delete,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                                ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        Colors.green,
+                                                  ),
+                                                  onPressed: () {
+                                                    Get.back();
+                                                    Get.off(() => (GameScreen(
+                                                          game: games
+                                                              .games[index],
+                                                        )));
+                                                  },
+                                                  child: const TextCustom(
+                                                    'เริ่มเกม',
+                                                    size: 20,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
                                     child: const Icon(
                                       Icons.delete,
                                       color: Colors.white,
@@ -134,7 +200,7 @@ class _MyGameScreenState extends State<MyGameScreen> {
                                     ),
                                     onPressed: () {
                                       Get.back();
-                                      Get.to(() => (GameScreen(
+                                      Get.off(() => (GameScreen(
                                             game: games.games[index],
                                           )));
                                     },

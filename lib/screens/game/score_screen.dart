@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:gueszy/screens/menu/menu_screen.dart';
 import 'package:gueszy/widgets/text_custom.dart';
 
 class ScoreScreen extends StatefulWidget {
@@ -111,7 +112,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        Get.back();
+                        Get.off(() => const MenuScreen());
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,

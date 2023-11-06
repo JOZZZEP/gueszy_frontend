@@ -17,6 +17,8 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   late final TabController _tabController;
+  String name = "";
+  String password = "";
 
   final List<Tab> tabList = [
     const Tab(text: "ทั้งหมด"),
@@ -64,28 +66,54 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                         content: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            RoundTextField(userControl.getName),
+                            RoundTextField(
+                              userControl.getName,
+                              onChanged: (value) => setState(() {
+                                name = value;
+                              }),
+                            ),
                             const SizedBox(
                               height: 20,
                             ),
-                            RoundTextField(userControl.getPassword)
+                            RoundTextField(
+                              userControl.getPassword,
+                              onChanged: (value) => setState(() {
+                                password = value;
+                              }),
+                            )
                           ],
                         ),
                         actions: <Widget>[
-                          Center(
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blue,
+                                ),
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                child: const TextCustom(
+                                  'แก้ไข',
+                                  size: 20,
+                                  color: Colors.white,
+                                ),
                               ),
-                              onPressed: () {
-                                Get.back();
-                              },
-                              child: const TextCustom(
-                                'ปิด',
-                                size: 20,
-                                color: Colors.white,
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.green,
+                                ),
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                child: const TextCustom(
+                                  'ปิด',
+                                  size: 20,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                         ],
                       ),

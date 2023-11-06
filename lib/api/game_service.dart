@@ -69,15 +69,15 @@ class GameServices {
 }
 
 void main(List<String> args) async {
-  // GameServices.deleteGame(13);
+  GameServices.deleteGame(13);
 
-  GameServices.getGamesById(2).then((value) {
-    print(value.games.length);
-    for (int i = 0; i < value.games.length; i++) {
-      print(value.games[i].name);
-      // print(value.games[1].name);
-    }
-  });
+  // GameServices.getGamesById(2).then((value) {
+  //   print(value.games.length);
+  //   for (int i = 0; i < value.games.length; i++) {
+  //     print(value.games[i].name);
+  //     // print(value.games[1].name);
+  //   }
+  // });
 
   // String url = "http://192.168.56.1:8080/gueszy/game";
   // final response = await http.get(Uri.parse(url));

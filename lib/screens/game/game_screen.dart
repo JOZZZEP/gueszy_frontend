@@ -23,7 +23,7 @@ class _GameScreenState extends State<GameScreen> {
   bool tap = true;
   String text = "หันไปทางเพื่อน";
   Color? backgroundColor = Colors.white;
-  int wordCount = 1;
+  int wordCount = 0;
   int score = 0;
   List<String> vocabList = [];
   List<int> scoreList = [];
@@ -67,6 +67,16 @@ class _GameScreenState extends State<GameScreen> {
   @override
   void initState() {
     super.initState();
+    timeLeft = 3;
+    seconds = 1;
+    start = false;
+    tap = true;
+    text = "หันไปทางเพื่อน";
+    backgroundColor = Colors.white;
+    wordCount = 0;
+    score = 0;
+    vocabList = [];
+    scoreList = [];
     VocabServices.getVocab(widget.game.id.toInt()).then((value) {
       setState(() {
         vocabs = value;
@@ -136,9 +146,9 @@ class _GameScreenState extends State<GameScreen> {
                                           } else {
                                             timer.cancel();
                                             backgroundColor = Colors.white;
-                                            wordCount++;
                                             text = vocabs!
                                                 .vocabularys[wordCount].word;
+                                            wordCount++;
                                             vocabList.add(text);
                                             scoreList.add(1);
                                             score++;
@@ -173,9 +183,9 @@ class _GameScreenState extends State<GameScreen> {
                                           } else {
                                             timer.cancel();
                                             backgroundColor = Colors.white;
-                                            wordCount++;
                                             text = vocabs!
                                                 .vocabularys[wordCount].word;
+                                            wordCount++;
                                             vocabList.add(text);
                                             scoreList.add(0);
                                             tap = true;

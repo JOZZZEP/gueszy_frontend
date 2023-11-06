@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gueszy/api/game_service.dart';
 import 'package:gueszy/controller/user_control.dart';
+import 'package:gueszy/screens/menu/menu_screen.dart';
 import 'package:gueszy/widgets/round_text_field.dart';
 import 'package:gueszy/widgets/text_custom.dart';
 
@@ -205,7 +206,7 @@ class _AddGameScreenState extends State<AddGameScreen> {
                           "access": 0,
                           "word": vocabList
                         });
-                        Get.back();
+                        Get.off(() => const MenuScreen());
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
