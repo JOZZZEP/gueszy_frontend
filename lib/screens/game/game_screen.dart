@@ -25,6 +25,8 @@ class _GameScreenState extends State<GameScreen> {
   Color? backgroundColor = Colors.white;
   int wordCount = 1;
   int score = 0;
+  List<String> vocabList = [];
+  List<int> scoreList = [];
 
   Vocabularys? vocabs;
 
@@ -35,7 +37,11 @@ class _GameScreenState extends State<GameScreen> {
           timeLeft--;
         } else {
           timer.cancel();
-          Get.off(() => const ScoreScreen());
+          Get.off(() => ScoreScreen(
+                vocabList: vocabList,
+                scoreList: scoreList,
+                score: score,
+              ));
         }
       });
     });
@@ -133,7 +139,9 @@ class _GameScreenState extends State<GameScreen> {
                                             wordCount++;
                                             text = vocabs!
                                                 .vocabularys[wordCount].word;
-                                            // text = "คำ $wordCount";
+                                            vocabList.add(text);
+                                            scoreList.add(1);
+                                            score++;
                                             tap = true;
                                           }
                                         });
@@ -168,7 +176,8 @@ class _GameScreenState extends State<GameScreen> {
                                             wordCount++;
                                             text = vocabs!
                                                 .vocabularys[wordCount].word;
-                                            // text = "คำ $wordCount";
+                                            vocabList.add(text);
+                                            scoreList.add(0);
                                             tap = true;
                                           }
                                         });
@@ -210,7 +219,11 @@ class _GameScreenState extends State<GameScreen> {
               right: 0,
               child: InkWell(
                 onTap: () {
-                  Get.off(() => const ScoreScreen());
+                  Get.off(() => ScoreScreen(
+                        vocabList: vocabList,
+                        scoreList: scoreList,
+                        score: score,
+                      ));
                 },
                 child: const SizedBox(
                     width: 50, height: 50, child: Icon(Icons.exit_to_app)),

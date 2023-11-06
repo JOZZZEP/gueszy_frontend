@@ -12,38 +12,53 @@ class AddGameScreen extends StatefulWidget {
 }
 
 class _AddGameScreenState extends State<AddGameScreen> {
-  late List<Row> textFieldList = [];
-  int textFieldCount = 1;
+  List<Row> textFieldList = [];
+  int textFieldCount = 0;
   String gameName = "";
   String gameImage = "";
+  List<String> vocabList = [];
+  List<TextEditingController> textControllers = [];
 
   @override
   void initState() {
     super.initState();
-    for (int i = 1; i <= 15; i++) {
-      textFieldList.add(
-        Row(
-          children: [
-            TextCustom(i.toString()),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: TextField(
-                decoration: const InputDecoration(
-                  contentPadding: EdgeInsets.all(5),
-                  isDense: true,
-                ),
-                style: GoogleFonts.kanit(
-                  fontSize: 13,
-                ),
-                onTap: () {},
+    textFieldList = [];
+    textFieldCount = 0;
+    vocabList = [];
+    textControllers = [];
+    gameName = "";
+    gameImage = "";
+    initTextField();
+  }
+
+  void initTextField() {
+    textFieldCount++;
+    TextEditingController controller =
+        TextEditingController(); // Create a controller
+    textControllers.add(controller); // Add it to the list of controllers
+
+    textFieldList.add(
+      Row(
+        children: [
+          TextCustom(
+            textFieldCount.toString(),
+            size: 18,
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: TextField(
+              decoration: const InputDecoration(
+                contentPadding: EdgeInsets.all(5),
+                isDense: true,
               ),
+              style: GoogleFonts.kanit(fontSize: 18),
+              controller: controller, // Assign the controller to the TextField
+              onChanged: (value) => setState(() {}),
             ),
-          ],
-        ),
-      );
-    }
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -120,7 +135,31 @@ class _AddGameScreenState extends State<AddGameScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          const TextCustom("คำศัพท์"),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const TextCustom(
+                                "คำศัพท์",
+                                size: 20,
+                              ),
+                              MaterialButton(
+                                height: 5,
+                                onPressed: () {
+                                  setState(() {
+                                    initTextField();
+                                  });
+                                },
+                                color: Colors.green,
+                                textColor: Colors.white,
+                                padding: const EdgeInsets.all(10),
+                                shape: const CircleBorder(),
+                                child: const Icon(
+                                  Icons.add,
+                                  size: 20,
+                                ),
+                              )
+                            ],
+                          ),
                           ...textFieldList.map((e) => e).toList(),
                         ],
                       ),
@@ -151,6 +190,11 @@ class _AddGameScreenState extends State<AddGameScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
+                        List<String> vocabList = textControllers
+                            .where((controller) => controller.text.isNotEmpty)
+                            .map((controller) => controller.text)
+                            .toList();
+                        print(vocabList);
                         Get.back();
                       },
                       style: ElevatedButton.styleFrom(

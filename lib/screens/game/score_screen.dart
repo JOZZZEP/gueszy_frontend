@@ -4,7 +4,15 @@ import 'package:get/get.dart';
 import 'package:gueszy/widgets/text_custom.dart';
 
 class ScoreScreen extends StatefulWidget {
-  const ScoreScreen({super.key});
+  final List<String> vocabList;
+  final List<int> scoreList;
+  final int score;
+  const ScoreScreen(
+      {Key? key,
+      required this.vocabList,
+      required this.scoreList,
+      required this.score})
+      : super(key: key);
 
   @override
   State<ScoreScreen> createState() => _ScoreScreenState();
@@ -49,8 +57,14 @@ class _ScoreScreenState extends State<ScoreScreen> {
                     size: 30,
                   ),
                 ),
+                Center(
+                  child: TextCustom(
+                    widget.score.toString(),
+                    size: 30,
+                  ),
+                ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Expanded(
                   child: Container(
@@ -59,12 +73,31 @@ class _ScoreScreenState extends State<ScoreScreen> {
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(width: 1, color: Colors.grey),
                     ),
-                    child: const SingleChildScrollView(
-                      padding: EdgeInsets.all(15),
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.all(15),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          TextCustom("คำศัพท์"),
+                          for (int i = 0; i < widget.vocabList.length; i++)
+                            Row(
+                              children: [
+                                widget.scoreList[i] == 1
+                                    ? const Icon(
+                                        Icons.done,
+                                        color: Colors.green,
+                                        size: 30,
+                                      )
+                                    : const Icon(
+                                        Icons.clear,
+                                        color: Colors.red,
+                                        size: 30,
+                                      ),
+                                TextCustom(
+                                  widget.vocabList[i],
+                                  size: 30,
+                                )
+                              ],
+                            ),
                         ],
                       ),
                     ),
