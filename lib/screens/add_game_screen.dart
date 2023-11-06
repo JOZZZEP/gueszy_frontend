@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gueszy/api/game_service.dart';
+import 'package:gueszy/controller/user_control.dart';
 import 'package:gueszy/widgets/round_text_field.dart';
 import 'package:gueszy/widgets/text_custom.dart';
 
@@ -63,6 +65,7 @@ class _AddGameScreenState extends State<AddGameScreen> {
 
   @override
   Widget build(BuildContext context) {
+    UserControl userControl = Get.find<UserControl>();
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -195,6 +198,13 @@ class _AddGameScreenState extends State<AddGameScreen> {
                             .map((controller) => controller.text)
                             .toList();
                         print(vocabList);
+                        GameServices.insertGame({
+                          "name": gameName,
+                          "image": gameImage,
+                          "userId": userControl.id,
+                          "access": 0,
+                          "word": vocabList
+                        });
                         Get.back();
                       },
                       style: ElevatedButton.styleFrom(

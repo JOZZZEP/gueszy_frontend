@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:gueszy/controller/user_control.dart';
 import 'package:gueszy/screens/add_game_screen.dart';
 import 'package:gueszy/screens/menu/all_game_screen.dart';
-import 'package:gueszy/screens/menu/popular_game_screen.dart';
+import 'package:gueszy/screens/menu/my_game_screen.dart';
 import 'package:gueszy/widgets/round_text_field.dart';
 import 'package:gueszy/widgets/text_custom.dart';
 
@@ -20,8 +20,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
   final List<Tab> tabList = [
     const Tab(text: "ทั้งหมด"),
-    // const Tab(text: "ยอดนิยม"),
-    // const Tab(text: "เกมใหม่"),
     const Tab(text: "เกมของฉัน"),
   ];
 
@@ -129,9 +127,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                   controller: _tabController,
                   children: const [
                     AllGameScreen(),
-                    PopularGameScreen(),
-                    // AllGameScreen(),
-                    // AllGameScreen(),
+                    MyGameScreen(),
                   ],
                 ),
               ),

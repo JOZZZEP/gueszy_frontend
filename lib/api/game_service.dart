@@ -1,10 +1,11 @@
 import 'dart:convert';
 
+import 'package:gueszy/constant/endpoint.dart';
 import 'package:gueszy/models/index.dart';
 import 'package:http/http.dart' as http;
 
 class GameServices {
-  static const String url = "http://192.168.1.131:8080/gueszy/game";
+  static String url = "${Endpoint.endpoint}/gueszy/game";
 
   static Future<Games> getGames() async {
     try {
@@ -21,7 +22,7 @@ class GameServices {
   }
 
   static Future<Games> getGamesById(int id) async {
-    String url = "http://192.168.1.179:8080/gueszy/game/userId/$id";
+    String url = "${Endpoint.endpoint}/gueszy/game/userId/$id";
     try {
       final response = await http.get(Uri.parse(url));
       if (200 == response.statusCode) {
@@ -45,9 +46,9 @@ class GameServices {
   }
 
   static Future<void> insertGame(Map<String, dynamic> data) async {
-    String url = "http://192.168.1.179:8080/gueszy/game/insert";
+    String url = "${Endpoint.endpoint}/gueszy/game/insert";
     print(data);
-    final response = await http.post(
+    await http.post(
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -57,8 +58,8 @@ class GameServices {
   }
 
   static Future<void> deleteGame(int id) async {
-    String url = "http://192.168.1.179:8080/gueszy/game/delete/$id";
-    final response = await http.delete(
+    String url = "${Endpoint.endpoint}/gueszy/game/delete/$id";
+    await http.delete(
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -68,16 +69,15 @@ class GameServices {
 }
 
 void main(List<String> args) async {
-
   // GameServices.deleteGame(13);
-  
-  // GameServices.getGamesById(2).then((value) {
-  //   print(value.games.length);
-  //   for(int i=0;i<value.games.length;i++){
-  //     print(value.games[i].name);
-  //     // print(value.games[1].name);
-  //   }
-  // });
+
+  GameServices.getGamesById(2).then((value) {
+    print(value.games.length);
+    for (int i = 0; i < value.games.length; i++) {
+      print(value.games[i].name);
+      // print(value.games[1].name);
+    }
+  });
 
   // String url = "http://192.168.56.1:8080/gueszy/game";
   // final response = await http.get(Uri.parse(url));

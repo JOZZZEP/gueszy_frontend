@@ -1,13 +1,14 @@
 import 'dart:convert';
 
+import 'package:gueszy/constant/endpoint.dart';
 import 'package:gueszy/models/index.dart';
 import 'package:http/http.dart' as http;
 
 class VocabServices {
   static Future<Vocabularys> getVocab(int id) async {
     try {
-      String url = ("http://192.168.1.131:8080/gueszy/vocabulary/gameId/") +
-          id.toString();
+      String url =
+          ("${Endpoint.endpoint}/gueszy/vocabulary/gameId/") + id.toString();
       final response = await http.get(Uri.parse(url));
       if (200 == response.statusCode) {
         final responseBody = utf8.decode(response.bodyBytes);
@@ -31,7 +32,7 @@ class VocabServices {
 }
 
 void main(List<String> args) async {
-  String url = "http://192.168.56.1:8080/gueszy/game";
+  String url = "${Endpoint.endpoint}/gueszy/game";
   final response = await http.get(Uri.parse(url));
   final responseBody = utf8.decode(response.bodyBytes);
   print(responseBody);

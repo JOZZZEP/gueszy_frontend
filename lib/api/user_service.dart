@@ -1,10 +1,11 @@
 import 'dart:convert';
 
+import 'package:gueszy/constant/endpoint.dart';
 import 'package:gueszy/models/index.dart';
 import 'package:http/http.dart' as http;
 
 class UserServices {
-  static const String url = "http://192.168.1.179:8080/gueszy/user/login";
+  static String url = "${Endpoint.endpoint}/gueszy/user/login";
 
   static Future<User> postUser(Map<String, String> user) async {
     try {
@@ -31,7 +32,7 @@ class UserServices {
   }
 
   static Future<int> registerUser(Map<String, String> user) async {
-    String url = "http://192.168.1.179:8080/gueszy/user/register";
+    String url = "${Endpoint.endpoint}/gueszy/user/register";
     try {
       final response = await http.post(
         Uri.parse(url),
