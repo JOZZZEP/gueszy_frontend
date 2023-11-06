@@ -23,10 +23,10 @@ class RoundedTextField extends StatelessWidget {
         decoration: InputDecoration(
           icon: Icon(
             icon,
-            color: Colors.white,
+            color: Colors.black,
           ),
           hintText: hintText,
-          hintStyle: const TextStyle(color: Colors.white),
+          hintStyle: const TextStyle(color: Colors.black),
           border: InputBorder.none,
         ),
         onChanged: onChanged,

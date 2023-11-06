@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:gueszy/screens/login_screen.dart';
-import 'package:gueszy/widgets/round_button_float.dart';
 import 'package:gueszy/widgets/rounded_text_field.dart';
 import 'package:gueszy/widgets/text_custom.dart';
 
@@ -14,13 +14,16 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: Colors.green,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const SizedBox(
+                height: 30,
+              ),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -44,33 +47,42 @@ class _RegisterPageState extends State<RegisterPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const TextCustom(
-                      "Register",
-                      size: 30,
+                      "REGISTER",
+                      size: 50,
                       isBold: true,
+                      color: Colors.white,
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 5,
                     ),
                     const RoundedTextField(
-                      "user name",
+                      "Username",
                     ),
                     const RoundedTextField(
-                      "password",
+                      "Password",
                       isPassword: true,
+                      icon: Icons.lock,
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
-                    const RoundButtonFloat(
-                      "Create Account",
-                      textColor: Colors.black,
-                      textSize: 20,
-                      buttonColor: Colors.yellow,
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.amber),
+                      child: const TextCustom(
+                        "Create Account",
+                        size: 20,
+                        isBold: true,
+                      ),
+                      onPressed: () {
+                        Get.off(() => const RegisterPage());
+                      },
                     ),
                     const SizedBox(
-                      height: 50,
+                      height: 30,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         const TextCustom(
                           "have an Account?",
@@ -79,11 +91,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         const SizedBox(
                           width: 5,
                         ),
-                        InkWell(
-                          child: const TextCustom("Log In", isBold: true),
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const LoginScreen()));
+                        ElevatedButton(
+                          child: const TextCustom("Login", isBold: true),
+                          onPressed: () {
+                            Get.off(() => const LoginScreen());
                           },
                         )
                       ],

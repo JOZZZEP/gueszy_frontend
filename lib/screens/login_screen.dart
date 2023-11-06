@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:gueszy/api/user_service.dart';
 import 'package:gueszy/screens/menu/register_screen.dart';
-import 'package:gueszy/widgets/round_button_float.dart';
 import 'package:gueszy/widgets/rounded_text_field.dart';
 import 'package:gueszy/widgets/text_custom.dart';
 
@@ -12,6 +13,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  String username = "";
+  String password = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,6 +24,9 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const SizedBox(
+                height: 30,
+              ),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -40,37 +46,54 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: Column(
-                  textDirection: TextDirection.ltr,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const TextCustom(
-                      "Login",
-                      size: 30,
+                      "LOGIN",
+                      size: 50,
                       isBold: true,
+                      color: Colors.white,
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 5,
                     ),
-                    const RoundedTextField(
-                      "user name",
+                    RoundedTextField(
+                      "Username",
+                      onChanged: (value) => setState(() {
+                        username = value;
+                      }),
                     ),
-                    const RoundedTextField(
-                      "password",
+                    RoundedTextField(
+                      "Password",
                       isPassword: true,
+                      icon: Icons.lock,
+                      onChanged: (value) => setState(() {
+                        password = value;
+                      }),
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
-                    const RoundButtonFloat(
-                      "Sign in",
-                      textColor: Colors.black,
-                      textSize: 20,
-                      buttonColor: Colors.yellow,
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.amber),
+                      child: const TextCustom(
+                        "Login",
+                        size: 20,
+                        isBold: true,
+                      ),
+                      onPressed: () {
+                        UserServices.postUser(
+                                {"name": username, "password": password})
+                            .then((user) => {print("${user.id} ${user.name}")});
+                        // Get.off(() => const RegisterPage());
+                      },
                     ),
                     const SizedBox(
-                      height: 50,
+                      height: 30,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         const TextCustom(
                           "Don't have an account?",
@@ -79,11 +102,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(
                           width: 5,
                         ),
-                        InkWell(
+                        ElevatedButton(
                           child: const TextCustom("Sign Up", isBold: true),
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const RegisterPage()));
+                          onPressed: () {
+                            Get.off(() => const RegisterPage());
                           },
                         )
                       ],
