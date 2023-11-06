@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gueszy/api/game_service.dart';
+import 'package:gueszy/controller/user_control.dart';
 import 'package:gueszy/models/index.dart';
 import 'package:gueszy/screens/game/game_screen.dart';
 import 'package:gueszy/widgets/text_custom.dart';
@@ -17,6 +18,7 @@ class _AllGameScreenState extends State<AllGameScreen> {
   // late List<AnimationController> _controllers;
   late Games games;
   bool isLoading = false;
+  UserControl userControl = Get.find<UserControl>();
 
   @override
   void initState() {

@@ -12,37 +12,38 @@ class AddGameScreen extends StatefulWidget {
 }
 
 class _AddGameScreenState extends State<AddGameScreen> {
-  late List<TextField> textFieldList = [];
+  late List<Row> textFieldList = [];
   int textFieldCount = 1;
+  String gameName = "";
+  String gameImage = "";
 
   @override
   void initState() {
     super.initState();
-    textFieldList.add(
-      TextField(
-        decoration: const InputDecoration(
-          contentPadding: EdgeInsets.all(5),
-          isDense: true,
-        ),
-        style: GoogleFonts.kanit(
-          fontSize: 13,
-        ),
-        onTap: () {
-          textFieldList.add(
-            TextField(
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.all(5),
-                isDense: true,
-              ),
-              style: GoogleFonts.kanit(
-                fontSize: 13,
-              ),
-              onTap: () {},
+    for (int i = 1; i <= 15; i++) {
+      textFieldList.add(
+        Row(
+          children: [
+            TextCustom(i.toString()),
+            const SizedBox(
+              width: 10,
             ),
-          );
-        },
-      ),
-    );
+            Expanded(
+              child: TextField(
+                decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.all(5),
+                  isDense: true,
+                ),
+                style: GoogleFonts.kanit(
+                  fontSize: 13,
+                ),
+                onTap: () {},
+              ),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   @override
@@ -80,17 +81,29 @@ class _AddGameScreenState extends State<AddGameScreen> {
                 //     const Expanded(child: RoundTextField("ชื่อเกม")),
                 //   ],
                 // ),
-                const Row(
+                Row(
                   children: [
-                    Expanded(child: RoundTextField("ชื่อเกม")),
+                    Expanded(
+                        child: RoundTextField(
+                      "ชื่อเกม",
+                      onChanged: (value) => setState(() {
+                        gameName = value;
+                      }),
+                    )),
                   ],
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                const Row(
+                Row(
                   children: [
-                    Expanded(child: RoundTextField("URL รูปภาพ")),
+                    Expanded(
+                        child: RoundTextField(
+                      "URL รูปภาพ",
+                      onChanged: (value) => setState(() {
+                        gameImage = value;
+                      }),
+                    )),
                   ],
                 ),
                 const SizedBox(

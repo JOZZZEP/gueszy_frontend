@@ -5,12 +5,17 @@ class RoundTextField extends StatelessWidget {
   const RoundTextField(
     this.label, {
     super.key,
+    this.onChanged,
+    this.isPassword = false,
   });
 
   final String label;
+  final ValueChanged<String>? onChanged;
+  final bool isPassword;
   @override
   Widget build(BuildContext context) {
     return TextField(
+      obscureText: isPassword,
       decoration: InputDecoration(
         border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20))),
@@ -23,6 +28,7 @@ class RoundTextField extends StatelessWidget {
       style: GoogleFonts.kanit(
         fontSize: 15,
       ),
+      onChanged: onChanged,
     );
   }
 }

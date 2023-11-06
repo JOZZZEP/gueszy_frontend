@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gueszy/api/user_service.dart';
+import 'package:gueszy/controller/user_control.dart';
+import 'package:gueszy/screens/menu/menu_screen.dart';
 import 'package:gueszy/screens/menu/register_screen.dart';
 import 'package:gueszy/widgets/rounded_text_field.dart';
 import 'package:gueszy/widgets/text_custom.dart';
@@ -85,8 +87,18 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {
                         UserServices.postUser(
                                 {"name": username, "password": password})
-                            .then((user) => {print("${user.id} ${user.name}")});
-                        // Get.off(() => const RegisterPage());
+                            .then((user) => {
+                                  setState(() {
+                                    if (user.id != 0) {
+                                      Get.put(UserControl(
+                                          id: user.id,
+                                          name: user.name,
+                                          password: user.password,
+                                          gueszyId: user.gueszyId));
+                                      Get.off(() => const MenuScreen());
+                                    }
+                                  })
+                                });
                       },
                     ),
                     const SizedBox(

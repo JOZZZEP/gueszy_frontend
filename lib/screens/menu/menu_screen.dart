@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gueszy/controller/user_control.dart';
 import 'package:gueszy/screens/add_game_screen.dart';
 import 'package:gueszy/screens/menu/all_game_screen.dart';
 import 'package:gueszy/screens/menu/popular_game_screen.dart';
+import 'package:gueszy/widgets/round_text_field.dart';
 import 'package:gueszy/widgets/text_custom.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -31,6 +33,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    UserControl userControl = Get.find<UserControl>();
     return Scaffold(
       body: SafeArea(
         child: NestedScrollView(
@@ -60,9 +63,15 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                             size: 30,
                           ),
                         ),
-                        content: const TextCustom(
-                          "user detail",
-                          size: 20,
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            RoundTextField(userControl.getName),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            RoundTextField(userControl.getPassword)
+                          ],
                         ),
                         actions: <Widget>[
                           Center(
