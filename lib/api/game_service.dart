@@ -44,7 +44,7 @@ class GameServices {
     return games;
   }
 
-  static void insertGame(Map<String, dynamic> data) async {
+  static Future<void> insertGame(Map<String, dynamic> data) async {
     String url = "http://192.168.1.179:8080/gueszy/game/insert";
     print(data);
     final response = await http.post(
@@ -55,9 +55,22 @@ class GameServices {
       body: jsonEncode(data),
     );
   }
+
+  static Future<void> deleteGame(int id) async {
+    String url = "http://192.168.1.179:8080/gueszy/game/delete/$id";
+    final response = await http.delete(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+  }
 }
 
 void main(List<String> args) async {
+
+  // GameServices.deleteGame(13);
+  
   // GameServices.getGamesById(2).then((value) {
   //   print(value.games.length);
   //   for(int i=0;i<value.games.length;i++){
