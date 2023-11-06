@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gueszy/widgets/rounded_text_field.dart';
 import 'package:gueszy/widgets/text_custom.dart';
 
 class AddGameScreen extends StatefulWidget {
@@ -76,7 +77,7 @@ class _AddGameScreenState extends State<AddGameScreen> {
                     const SizedBox(
                       width: 10,
                     ),
-                    const Expanded(child: RoundTextField("ชื่อเกม")),
+                    const Expanded(child: RoundedTextField("ชื่อเกม")),
                   ],
                 ),
                 const SizedBox(
@@ -84,7 +85,7 @@ class _AddGameScreenState extends State<AddGameScreen> {
                 ),
                 const Row(
                   children: [
-                    Expanded(child: RoundTextField("คำอธิบาย")),
+                    Expanded(child: RoundedTextField("คำอธิบาย")),
                   ],
                 ),
                 const SizedBox(
@@ -157,28 +158,4 @@ class _AddGameScreenState extends State<AddGameScreen> {
   }
 }
 
-class RoundTextField extends StatelessWidget {
-  const RoundTextField(
-    this.label, {
-    super.key,
-  });
 
-  final String label;
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-        border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20))),
-        labelText: label,
-        labelStyle: GoogleFonts.kanit(
-          fontSize: 15,
-        ),
-        contentPadding: const EdgeInsets.all(15),
-      ),
-      style: GoogleFonts.kanit(
-        fontSize: 15,
-      ),
-    );
-  }
-}
