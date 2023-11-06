@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gueszy/api/user_service.dart';
 import 'package:gueszy/screens/login_screen.dart';
 import 'package:gueszy/widgets/rounded_text_field.dart';
 import 'package:gueszy/widgets/text_custom.dart';
@@ -12,6 +13,8 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  String username = "";
+  String password = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,14 +58,16 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(
                       height: 5,
                     ),
-                    const RoundedTextField(
-                      "Username",
-                    ),
-                    const RoundedTextField(
-                      "Password",
-                      isPassword: true,
-                      icon: Icons.lock,
-                    ),
+                    RoundedTextField("Username",
+                        onChanged: (value) => setState(() {
+                              username = value;
+                            })),
+                    RoundedTextField("Password",
+                        isPassword: true,
+                        icon: Icons.lock,
+                        onChanged: (value) => setState(() {
+                              password = value;
+                            })),
                     const SizedBox(
                       height: 10,
                     ),
@@ -75,7 +80,21 @@ class _RegisterPageState extends State<RegisterPage> {
                         isBold: true,
                       ),
                       onPressed: () {
-                        Get.off(() => const RegisterPage());
+                        print(username);
+                        print(password);
+                        UserServices.registerUser(
+                                {"name": username, "password": password})
+                            .then((user) => {
+                                  setState(() {
+                                    if (user == 201) {
+                                      print("สร้างสำเร็จ");
+                                      Get.off(() => const LoginScreen());
+                                    } else {
+                                      print("มี username นี้แล้ว");
+                                      Get.off(() => const RegisterPage());
+                                    }
+                                  })
+                                });
                       },
                     ),
                     const SizedBox(
